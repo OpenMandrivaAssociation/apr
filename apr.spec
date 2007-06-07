@@ -5,7 +5,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.2.8
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -95,6 +95,13 @@ cat >> config.layout << EOF
 EOF
 
 %build
+
+%if %mdkversion >= 200710
+export CFLAGS="%{optflags} -fstack-protector"
+export CXXFLAGS="%{optflags} -fstack-protector"
+export FFLAGS="%{optflags} -fstack-protector"
+%endif
+
 # We need to re-run ./buildconf because of any applied patch(es)
 rm -f configure; ./buildconf
 
@@ -207,5 +214,3 @@ rm -f %{buildroot}%{_libdir}/apr.exp
 %{_libdir}/pkgconfig/*.pc
 %dir %{_includedir}/apr-%{aprver}
 %{_includedir}/apr-%{aprver}/*.h
-
-
