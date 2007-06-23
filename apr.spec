@@ -4,8 +4,8 @@
 
 Summary:	Apache Portable Runtime library
 Name:		apr
-Version:	1.2.8
-Release:	%mkrel 3
+Version:	1.2.9
+Release:	%mkrel 1
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -15,7 +15,6 @@ Patch1:		apr-0.9.3-deplibs.patch
 Patch2:		apr-1.1.0-config.diff
 Patch3:		apr-1.0.0-mutextype_reorder.diff
 Patch4:		apr-0.9.6-readdir64.patch
-Patch5:		apr-0.9.6-procexit.patch
 Patch6:		apr-1.2.2-deepbind.diff
 Patch9:		apr-1.2.2-locktimeout.patch
 Patch10:	apr-1.2.7-psprintfpi.patch
@@ -69,7 +68,6 @@ C data structures and routines.
 %patch2 -p0 -b .config
 %patch3 -p0 -b .mutextype_reorder
 %patch4 -p1 -b .readdir64
-%patch5 -p1 -b .procexit
 #%patch6 -p0 -b .deepbind
 %patch9 -p1 -b .locktimeout
 %patch10 -p1 -b .psprintfpi
