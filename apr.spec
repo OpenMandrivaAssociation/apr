@@ -1,11 +1,12 @@
-%define aprver	1
-%define libname	%mklibname apr %{aprver}
-%define epoch	1
+%define aprver 1
+%define libname %mklibname apr %{aprver}
+%define develname %mklibname -d apr
+%define epoch 1
 
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.2.9
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -18,13 +19,13 @@ Patch4:		apr-0.9.6-readdir64.patch
 Patch6:		apr-1.2.2-deepbind.diff
 Patch9:		apr-1.2.2-locktimeout.patch
 Patch10:	apr-1.2.7-psprintfpi.patch
-BuildPrereq:	autoconf2.5
-BuildPrereq:	automake1.7
-BuildPrereq:	libtool
-BuildPrereq:	doxygen
-BuildPrereq:	openssl-devel
-BuildPrereq:	python
-BuildPrereq:	e2fsprogs-devel
+BuildRequires:	autoconf2.5
+BuildRequires:	automake1.7
+BuildRequires:	libtool
+BuildRequires:	doxygen
+BuildRequires:	openssl-devel
+BuildRequires:	python
+BuildRequires:	e2fsprogs-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -46,16 +47,17 @@ free library of C data structures and routines, forming a system
 portability layer to as many operating systems as possible,
 including Unices, MS Win32, BeOS and OS/2.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	APR library development kit
 Group:		Development/C
 Requires:	%{libname} = %{epoch}:%{version}
-Provides:	lib%{name}-devel  = %{epoch}:%{version}
+Provides:	%{libname}-devel  = %{epoch}:%{version}
+Obsoletes:	%{libname}-devel
 Provides:	%{name}-devel = %{epoch}:%{version}
-Obsoletes:	lib%{name}-devel %{name}-devel
+Obsoletes:	%{name}-devel
 Epoch:		%{epoch}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 This package provides the support files which can be used to 
 build applications using the APR library.  The mission of the
 Apache Portable Runtime (APR) is to provide a free library of 
@@ -193,7 +195,7 @@ rm -f %{buildroot}%{_libdir}/apr.exp
 %doc CHANGES README*
 %{_libdir}/libapr-%{aprver}.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root,-)
 %doc docs/APRDesign.html docs/canonical_filenames.html
 %doc docs/incomplete_types docs/non_apr_programs
