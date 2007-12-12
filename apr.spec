@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.2.12
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -18,6 +18,7 @@ Patch3:		apr-1.0.0-mutextype_reorder.diff
 Patch4:		apr-0.9.6-readdir64.patch
 Patch6:		apr-1.2.2-deepbind.diff
 Patch9:		apr-1.2.2-locktimeout.patch
+Patch10:	apr-1.2.7-psprintfpi.patch
 BuildRequires:	autoconf2.5
 BuildRequires:	automake1.7
 BuildRequires:	libtool
@@ -71,6 +72,7 @@ C data structures and routines.
 %patch4 -p1 -b .readdir64
 #%patch6 -p0 -b .deepbind
 %patch9 -p1 -b .locktimeout
+%patch10 -p1 -b .psprintfpi
 
 cat >> config.layout << EOF
 <Layout NUX>
@@ -173,6 +175,9 @@ perl -pi -e "s|-luuid -lcrypt||g" \
 
 # Unpackaged files:
 rm -f %{buildroot}%{_libdir}/apr.exp
+
+# extra headers
+install -m0644 include/arch/unix/apr_arch_file_io.h %{buildroot}%{_includedir}/apr-%{aprver}/
 
 %post -n %{libname} -p /sbin/ldconfig
 
