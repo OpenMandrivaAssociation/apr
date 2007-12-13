@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.2.12
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -177,7 +177,9 @@ perl -pi -e "s|-luuid -lcrypt||g" \
 rm -f %{buildroot}%{_libdir}/apr.exp
 
 # extra headers
-install -m0644 include/arch/unix/apr_arch_file_io.h %{buildroot}%{_includedir}/apr-%{aprver}/
+install -d %{buildroot}%{_includedir}/apr-%{aprver}/arch/unix
+install -m0644 include/arch/apr_private_common.h %{buildroot}%{_includedir}/apr-%{aprver}/arch/
+install -m0644 include/arch/unix/*.h %{buildroot}%{_includedir}/apr-%{aprver}/arch/unix/
 
 %post -n %{libname} -p /sbin/ldconfig
 
@@ -204,4 +206,8 @@ install -m0644 include/arch/unix/apr_arch_file_io.h %{buildroot}%{_includedir}/a
 %{_libdir}/apr-%{aprver}/build/*
 %{_libdir}/pkgconfig/*.pc
 %dir %{_includedir}/apr-%{aprver}
+%dir %{_includedir}/apr-%{aprver}/arch
+%dir %{_includedir}/apr-%{aprver}/arch/unix
 %{_includedir}/apr-%{aprver}/*.h
+%{_includedir}/apr-%{aprver}/arch/*.h
+%{_includedir}/apr-%{aprver}/arch/unix/*.h
