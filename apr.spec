@@ -26,6 +26,7 @@ BuildRequires:	doxygen
 BuildRequires:	openssl-devel
 BuildRequires:	python
 BuildRequires:	e2fsprogs-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 The mission of the Apache Portable Runtime (APR) is to provide a
