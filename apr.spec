@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.2.12
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -37,8 +37,8 @@ including Unices, MS Win32, BeOS and OS/2.
 %package -n	%{libname}
 Summary:	Apache Portable Runtime library
 Group: 		System/Libraries
-Provides:	lib%{name} = %{epoch}:%{version}
-Obsoletes:	lib%{name} = %{epoch}:%{version}
+Provides:	lib%{name} = %{epoch}:%{version}-%{release}
+Obsoletes:	lib%{name}
 Epoch:		%{epoch}
 
 %description -n	%{libname}
@@ -51,9 +51,9 @@ including Unices, MS Win32, BeOS and OS/2.
 Summary:	APR library development kit
 Group:		Development/C
 Requires:	%{libname} = %{epoch}:%{version}
-Provides:	%{libname}-devel  = %{epoch}:%{version}
-Obsoletes:	%{libname}-devel
-Provides:	%{name}-devel = %{epoch}:%{version}
+Provides:	%{mklibname apr -d 1} = %{epoch}:%{version}-%{release}
+Obsoletes:	%{mklibname apr -d 1}
+Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Obsoletes:	%{name}-devel
 Epoch:		%{epoch}
 
@@ -137,7 +137,7 @@ make dox
 make test
 
 %install
-[ -n "%{buildroot}" -a "%{buildroot}" != / ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %makeinstall_std
 
@@ -186,7 +186,7 @@ install -m0644 include/arch/unix/*.h %{buildroot}%{_includedir}/apr-%{aprver}/ar
 %postun -n %{libname} -p /sbin/ldconfig
 
 %clean
-[ -n "%{buildroot}" -a "%{buildroot}" != / ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root,-)
