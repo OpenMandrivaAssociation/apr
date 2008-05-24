@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.2.12
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -70,7 +70,9 @@ C data structures and routines.
 %patch2 -p0 -b .config
 %patch3 -p0 -b .mutextype_reorder
 %patch4 -p1 -b .readdir64
-#%patch6 -p0 -b .deepbind
+%if %mdkversion >= 200900
+%patch6 -p0 -b .deepbind
+%endif
 %patch9 -p1 -b .locktimeout
 %patch10 -p1 -b .psprintfpi
 
