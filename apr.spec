@@ -5,8 +5,8 @@
 
 Summary:	Apache Portable Runtime library
 Name:		apr
-Version:	1.2.12
-Release:	%mkrel 5
+Version:	1.3.0
+Release:	%mkrel 0.1
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -15,10 +15,9 @@ Source1:	http://www.apache.org/dist/apr/apr-%{version}.tar.gz.asc
 Patch1:		apr-0.9.3-deplibs.patch
 Patch2:		apr-1.1.0-config.diff
 Patch3:		apr-1.0.0-mutextype_reorder.diff
-Patch4:		apr-0.9.6-readdir64.patch
 Patch6:		apr-1.2.2-deepbind.diff
 Patch9:		apr-1.2.2-locktimeout.patch
-Patch10:	apr-1.2.7-psprintfpi.patch
+Patch10:	apr-shm_destroy_twice_fix.diff
 BuildRequires:	autoconf2.5
 BuildRequires:	automake1.7
 BuildRequires:	libtool
@@ -66,15 +65,15 @@ C data structures and routines.
 %prep
 
 %setup -q -n %{name}-%{version}
-%patch1 -p1 -b .deplibs
+%patch1 -p0 -b .deplibs
 %patch2 -p0 -b .config
 %patch3 -p0 -b .mutextype_reorder
-%patch4 -p1 -b .readdir64
 %if %mdkversion >= 200900
 %patch6 -p0 -b .deepbind
 %endif
 %patch9 -p1 -b .locktimeout
-%patch10 -p1 -b .psprintfpi
+%patch10 -p0 -b .shm_destroy_twice_fix
+
 
 cat >> config.layout << EOF
 <Layout NUX>
@@ -100,15 +99,7 @@ EOF
 %serverbuild
 
 # We need to re-run ./buildconf because of any applied patch(es)
-rm -f configure; ./buildconf
-
-# hack to enable LFS on x86_64
-%ifarch x86_64
-perl -pi -e "s|4yes|8yes|g" configure*
-cat > config.cache << EOF
-apr_cv_use_lfs64=yes
-EOF
-%endif
+rm -f configure; sh ./buildconf
 
 # Forcibly prevent detection of shm_open (which then picks up but
 # does not use -lrt).
@@ -136,7 +127,7 @@ EOF
 make dox
 
 %check
-make test
+make check
 
 %install
 rm -rf %{buildroot}
