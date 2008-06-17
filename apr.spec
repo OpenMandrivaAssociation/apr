@@ -5,8 +5,8 @@
 
 Summary:	Apache Portable Runtime library
 Name:		apr
-Version:	1.3.0
-Release:	%mkrel 1
+Version:	1.3.2
+Release:	%mkrel 0.1
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -17,7 +17,6 @@ Patch2:		apr-1.1.0-config.diff
 Patch3:		apr-1.0.0-mutextype_reorder.diff
 Patch6:		apr-1.2.2-deepbind.diff
 Patch9:		apr-1.2.2-locktimeout.patch
-Patch10:	apr-shm_destroy_twice_fix.diff
 BuildRequires:	autoconf2.5
 BuildRequires:	automake1.7
 BuildRequires:	libtool
@@ -72,7 +71,6 @@ C data structures and routines.
 %patch6 -p0 -b .deepbind
 %endif
 %patch9 -p1 -b .locktimeout
-%patch10 -p0 -b .shm_destroy_twice_fix
 
 
 cat >> config.layout << EOF
