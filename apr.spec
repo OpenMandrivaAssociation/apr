@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.3.2
-Release:	%mkrel 0.1
+Release:	%mkrel 1
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -71,7 +71,6 @@ C data structures and routines.
 %patch6 -p0 -b .deepbind
 %endif
 %patch9 -p1 -b .locktimeout
-
 
 cat >> config.layout << EOF
 <Layout NUX>
