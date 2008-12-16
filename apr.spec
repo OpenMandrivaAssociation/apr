@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.3.3
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -49,6 +49,7 @@ including Unices, MS Win32, BeOS and OS/2.
 Summary:	APR library development kit
 Group:		Development/C
 Requires:	%{libname} = %{epoch}:%{version}
+Requires:	libtool
 Provides:	%{mklibname apr -d 1} = %{epoch}:%{version}-%{release}
 Obsoletes:	%{mklibname apr -d 1}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
@@ -143,6 +144,9 @@ for f in apr_common.m4 apr_hints.m4 apr_network.m4 apr_threads.m4 find_apr.m4; d
     install -m0644 build/${f} %{buildroot}%{_libdir}/apr-%{aprver}/build/${f}
 done
 install -m0755 build/gen-build.py %{buildroot}%{_libdir}/apr-%{aprver}/build/
+
+# enforce system libtool
+ln -snf %{_bindir}/libtool %{buildroot}%{_libdir}/apr-%{aprver}/build/libtool
 
 # Sanitize apr_rules.mk
 sed -e "/^apr_build/d" \
