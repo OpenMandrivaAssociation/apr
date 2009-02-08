@@ -6,17 +6,18 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.3.3
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
 Source0:	http://www.apache.org/dist/apr/apr-%{version}.tar.gz
 Source1:	http://www.apache.org/dist/apr/apr-%{version}.tar.gz.asc
-Patch1:		apr-0.9.3-deplibs.patch
-Patch2:		apr-1.1.0-config.diff
-Patch3:		apr-1.0.0-mutextype_reorder.diff
-Patch6:		apr-1.2.2-deepbind.diff
-Patch9:		apr-1.2.2-locktimeout.patch
+Patch0:		apr-0.9.3-deplibs.patch
+Patch1:		apr-1.1.0-config.diff
+Patch2:		apr-1.0.0-mutextype_reorder.diff
+Patch3:		apr-1.2.2-deepbind.diff
+Patch4:		apr-1.2.2-locktimeout.patch
+Patch5:		apr-1.3.3-libtool22.patch
 BuildRequires:	autoconf2.5
 BuildRequires:	automake1.7
 BuildRequires:	libtool
@@ -27,10 +28,9 @@ BuildRequires:	e2fsprogs-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
-The mission of the Apache Portable Runtime (APR) is to provide a
-free library of C data structures and routines, forming a system
-portability layer to as many operating systems as possible,
-including Unices, MS Win32, BeOS and OS/2.
+The mission of the Apache Portable Runtime (APR) is to provide a free library
+of C data structures and routines, forming a system portability layer to as
+many operating systems as possible, including Unices, MS Win32, BeOS and OS/2.
 
 %package -n	%{libname}
 Summary:	Apache Portable Runtime library
@@ -40,10 +40,9 @@ Obsoletes:	lib%{name}
 Epoch:		%{epoch}
 
 %description -n	%{libname}
-The mission of the Apache Portable Runtime (APR) is to provide a
-free library of C data structures and routines, forming a system
-portability layer to as many operating systems as possible,
-including Unices, MS Win32, BeOS and OS/2.
+The mission of the Apache Portable Runtime (APR) is to provide a free library
+of C data structures and routines, forming a system portability layer to as
+many operating systems as possible, including Unices, MS Win32, BeOS and OS/2.
 
 %package -n	%{develname}
 Summary:	APR library development kit
@@ -57,21 +56,21 @@ Obsoletes:	%{name}-devel
 Epoch:		%{epoch}
 
 %description -n	%{develname}
-This package provides the support files which can be used to 
-build applications using the APR library.  The mission of the
-Apache Portable Runtime (APR) is to provide a free library of 
-C data structures and routines.
+This package provides the support files which can be used to build applications
+using the APR library. The mission of the Apache Portable Runtime (APR) is to
+provide a free library of C data structures and routines.
 
 %prep
 
 %setup -q -n %{name}-%{version}
-%patch1 -p0 -b .deplibs
-%patch2 -p0 -b .config
-%patch3 -p0 -b .mutextype_reorder
+%patch0 -p0 -b .deplibs
+%patch1 -p0 -b .config
+%patch2 -p0 -b .mutextype_reorder
 %if %mdkversion >= 200900
-%patch6 -p0 -b .deepbind
+%patch3 -p0 -b .deepbind
 %endif
-%patch9 -p1 -b .locktimeout
+%patch4 -p1 -b .locktimeout
+%patch5 -p1 -b .libtool22
 
 cat >> config.layout << EOF
 <Layout NUX>
