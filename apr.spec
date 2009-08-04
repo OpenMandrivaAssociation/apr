@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.3.7
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -23,7 +23,11 @@ BuildRequires:	libtool
 BuildRequires:	doxygen
 BuildRequires:	openssl-devel
 BuildRequires:	python
+%if %mdvver >= 201000
+BuildRequires: libuuid-devel
+%else
 BuildRequires:	e2fsprogs-devel
+%endif
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
