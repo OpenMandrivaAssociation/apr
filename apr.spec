@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.4.2
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -20,7 +20,7 @@ Patch4:		apr-1.2.2-locktimeout.patch
 # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=46488
 Patch5:		apr-1.4.2-alias.patch
 BuildRequires:	autoconf2.5
-BuildRequires:	automake1.7
+BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	doxygen
 BuildRequires:	openssl-devel
