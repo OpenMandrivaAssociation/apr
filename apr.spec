@@ -101,7 +101,8 @@ EOF
 %serverbuild
 
 # We need to re-run ./buildconf because of any applied patch(es)
-rm -f configure; sh ./buildconf
+#rm -f configure; sh ./buildconf
+autoreconf -fi
 
 # Forcibly prevent detection of shm_open (which then picks up but
 # does not use -lrt).
