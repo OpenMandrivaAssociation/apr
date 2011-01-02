@@ -19,11 +19,11 @@ Patch3:		apr-1.2.2-deepbind.diff
 Patch4:		apr-1.2.2-locktimeout.patch
 # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=46488
 Patch5:		apr-1.4.2-alias.patch
-BuildRequires:	autoconf2.5
+Patch6:		apr-1.4.2-aclocaldir.patch
+BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	doxygen
-BuildRequires:	openssl-devel
 BuildRequires:	python
 %if %mdvver >= 201000
 BuildRequires: libuuid-devel
@@ -76,6 +76,7 @@ provide a free library of C data structures and routines.
 %endif
 %patch4 -p0 -b .locktimeout
 %patch5 -p1 -b .alias
+%patch6 -p0 -b .aclocal
 
 cat >> config.layout << EOF
 <Layout NUX>
@@ -102,7 +103,7 @@ EOF
 
 # We need to re-run ./buildconf because of any applied patch(es)
 #rm -f configure; sh ./buildconf
-autoreconf -fi
+./buildconf
 
 # Forcibly prevent detection of shm_open (which then picks up but
 # does not use -lrt).
