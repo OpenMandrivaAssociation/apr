@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.4.2
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
