@@ -5,8 +5,8 @@
 
 Summary:	Apache Portable Runtime library
 Name:		apr
-Version:	1.4.2
-Release:	%mkrel 5
+Version:	1.4.4
+Release:	%mkrel 1
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -17,9 +17,6 @@ Patch1:		apr-1.1.0-config.diff
 Patch2:		apr-1.0.0-mutextype_reorder.diff
 Patch3:		apr-1.2.2-deepbind.diff
 Patch4:		apr-1.2.2-locktimeout.patch
-# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=46488
-Patch5:		apr-1.4.2-alias.patch
-Patch6:		apr-1.4.2-aclocaldir.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -75,8 +72,6 @@ provide a free library of C data structures and routines.
 %patch3 -p0 -b .deepbind
 %endif
 %patch4 -p0 -b .locktimeout
-%patch5 -p1 -b .alias
-%patch6 -p0 -b .aclocal
 
 cat >> config.layout << EOF
 <Layout NUX>
