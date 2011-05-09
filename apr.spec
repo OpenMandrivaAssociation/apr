@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.4.4
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -154,6 +154,9 @@ sed -e "/^apr_build/d" \
     -e 's|$(apr_builders)|%{_libdir}/apr-%{aprver}/build|g' \
     -e 's|$(apr_builddir)|%{_libdir}/apr-%{aprver}/build|g' \
     < build/apr_rules.mk > %{buildroot}%{_libdir}/apr-%{aprver}/build/apr_rules.mk
+
+# antibork
+perl -pi -e "s|^top_builddir=.*|top_builddir=%{_libdir}/apr-%{aprver}/build|g" %{buildroot}%{_libdir}/apr-%{aprver}/build/apr_rules.mk
 
 # Move docs to more convenient location
 rm -rf html
