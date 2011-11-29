@@ -6,7 +6,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Version:	1.4.5
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	Apache License
 Group:		System/Libraries
 URL:		http://apr.apache.org/
@@ -15,7 +15,6 @@ Source1:	http://www.apache.org/dist/apr/apr-%{version}.tar.gz.asc
 Patch0:		apr-0.9.3-deplibs.patch
 Patch1:		apr-1.1.0-config.diff
 Patch2:		apr-1.0.0-mutextype_reorder.diff
-Patch3:		apr-1.2.2-deepbind.diff
 Patch4:		apr-1.2.2-locktimeout.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -68,9 +67,6 @@ provide a free library of C data structures and routines.
 %patch0 -p0 -b .deplibs
 %patch1 -p0 -b .config
 %patch2 -p0 -b .mutextype_reorder
-%if %mdkversion >= 200900
-%patch3 -p0 -b .deepbind
-%endif
 %patch4 -p0 -b .locktimeout
 
 cat >> config.layout << EOF
@@ -162,10 +158,6 @@ perl -pi -e "s|^top_builddir=.*|top_builddir=%{_libdir}/apr-%{aprver}/build|g" %
 rm -rf html
 cp -r docs/dox/html html
 
-# Trim exported dependecies
-sed -ri '/^dependency_libs/{s,-l(uuid|crypt) ,,g}' \
-    %{buildroot}%{_libdir}/libapr*.la
-
 # here too
 perl -pi -e "s|-luuid -lcrypt||g" \
     %{buildroot}%{_bindir}/apr-%{aprver}-config \
@@ -179,13 +171,8 @@ install -d %{buildroot}%{_includedir}/apr-%{aprver}/arch/unix
 install -m0644 include/arch/apr_private_common.h %{buildroot}%{_includedir}/apr-%{aprver}/arch/
 install -m0644 include/arch/unix/*.h %{buildroot}%{_includedir}/apr-%{aprver}/arch/unix/
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
+# cleanup
+rm -f %{buildroot}%{buildroot}%{_libdir}/libapr*.*a
 
 %clean
 rm -rf %{buildroot}
@@ -201,7 +188,6 @@ rm -rf %{buildroot}
 %doc docs/incomplete_types docs/non_apr_programs
 %doc --parents html
 %{_bindir}/apr-%{aprver}-config
-%{_libdir}/libapr-%{aprver}.*a
 %{_libdir}/libapr-%{aprver}.so
 %dir %{_libdir}/apr-%{aprver}
 %dir %{_libdir}/apr-%{aprver}/build
