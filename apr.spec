@@ -172,7 +172,7 @@ install -m0644 include/arch/apr_private_common.h %{buildroot}%{_includedir}/apr-
 install -m0644 include/arch/unix/*.h %{buildroot}%{_includedir}/apr-%{aprver}/arch/unix/
 
 # cleanup
-rm -f %{buildroot}%{buildroot}%{_libdir}/libapr*.*a
+rm -f %{buildroot}%{_libdir}/libapr*.*a
 
 %clean
 rm -rf %{buildroot}
