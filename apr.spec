@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 3
+%define release %mkrel 4
 %else
 # Old distros
-%define subrel 1
+%define subrel 2
 %define release %mkrel 0
 %endif
 
@@ -165,9 +165,6 @@ perl -pi -e "s|^top_builddir=.*|top_builddir=%{_libdir}/apr-%{aprver}/build|g" %
 rm -rf html
 cp -r docs/dox/html html
 
-# Trim exported dependecies
-sed -ri '/^dependency_libs/{s,-l(uuid|crypt) ,,g}' %{buildroot}%{_libdir}/libapr*.la
-
 # here too
 perl -pi -e "s|-luuid -lcrypt||g" \
     %{buildroot}%{_bindir}/apr-%{aprver}-config \
@@ -181,10 +178,8 @@ install -d %{buildroot}%{_includedir}/apr-%{aprver}/arch/unix
 install -m0644 include/arch/apr_private_common.h %{buildroot}%{_includedir}/apr-%{aprver}/arch/
 install -m0644 include/arch/unix/*.h %{buildroot}%{_includedir}/apr-%{aprver}/arch/unix/
 
-%if %mdkversion >= 201200
 # cleanup
 rm -f %{buildroot}%{_libdir}/libapr*.*a
-%endif
 
 %clean
 rm -rf %{buildroot}
@@ -201,9 +196,6 @@ rm -rf %{buildroot}
 %doc --parents html
 %{_bindir}/apr-%{aprver}-config
 %{_libdir}/libapr-%{aprver}.so
-%if %mdkversion < 201200
-%{_libdir}/libapr-%{aprver}.*a
-%endif
 %dir %{_libdir}/apr-%{aprver}
 %dir %{_libdir}/apr-%{aprver}/build
 %{_libdir}/apr-%{aprver}/build/*
