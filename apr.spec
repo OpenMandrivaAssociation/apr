@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 4
+%define release %mkrel 0.1
 %else
 # Old distros
-%define subrel 2
+%define subrel 1
 %define release %mkrel 0
 %endif
 
@@ -14,7 +14,7 @@
 
 Summary:	Apache Portable Runtime library
 Name:		apr
-Version:	1.4.5
+Version:	1.4.6
 Release:	%release
 License:	Apache License
 Group:		System/Libraries
