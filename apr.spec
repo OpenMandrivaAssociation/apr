@@ -1,6 +1,6 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 1
+%define release %mkrel 2
 %else
 # Old distros
 %define subrel 1
@@ -22,7 +22,7 @@ URL:		http://apr.apache.org/
 Source0:	http://www.apache.org/dist/apr/apr-%{version}.tar.gz
 Source1:	http://www.apache.org/dist/apr/apr-%{version}.tar.gz.asc
 Patch0:		apr-0.9.3-deplibs.patch
-Patch1:		apr-1.1.0-config.diff
+Patch1:		apr-1.4.6-config.diff
 Patch2:		apr-1.0.0-mutextype_reorder.diff
 Patch4:		apr-1.2.2-locktimeout.patch
 BuildRequires:	autoconf automake libtool
@@ -72,7 +72,7 @@ provide a free library of C data structures and routines.
 
 %setup -q -n %{name}-%{version}
 %patch0 -p0 -b .deplibs
-%patch1 -p0 -b .config
+%patch1 -p1 -b .config
 %patch2 -p0 -b .mutextype_reorder
 %patch4 -p0 -b .locktimeout
 
