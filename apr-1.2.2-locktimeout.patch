@@ -1,0 +1,11 @@
+--- test/testlock.c	2007-03-01 11:30:24.000000000 +0100
++++ test/testlock.c.oden	2009-07-04 18:34:12.000000000 +0200
+@@ -297,7 +297,7 @@ static void test_timeoutcond(abts_case *
+             continue;
+         }
+         ABTS_INT_EQUAL(tc, 1, APR_STATUS_IS_TIMEUP(s));
+-        ABTS_ASSERT(tc, "Timer returned too late", end - begin - timeout < 100000);
++        ABTS_ASSERT(tc, "Timer returned too late", end - begin - timeout < 500000);
+         break;
+     }
+     ABTS_ASSERT(tc, "Too many retries", i < MAX_RETRY);
