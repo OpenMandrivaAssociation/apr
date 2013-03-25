@@ -2,6 +2,7 @@
 %define major	0
 %define libname %mklibname apr %{api} %{major}
 %define devname %mklibname -d apr
+%bcond_with	crosscompile
 
 Summary:	Apache Portable Runtime library
 Name:		apr
@@ -17,6 +18,7 @@ Patch0:		apr-0.9.3-deplibs.patch
 Patch1:		apr-1.4.6-config.diff
 Patch2:		apr-1.0.0-mutextype_reorder.diff
 Patch4:		apr-1.2.2-locktimeout.patch
+Patch5:		apr-aarch64.patch
 
 BuildRequires:	doxygen
 BuildRequires:	libtool
@@ -55,6 +57,7 @@ provide a free library of C data structures and routines.
 %patch1 -p1 -b .config
 %patch2 -p0 -b .mutextype_reorder
 %patch4 -p0 -b .locktimeout
+%patch5 -p1 -b .aarch64
 
 cat >> config.layout << EOF
 <Layout NUX>
@@ -77,6 +80,15 @@ cat >> config.layout << EOF
 EOF
 
 %build
+%if %{with crosscompile}
+export ac_cv_file__dev_zero=yes
+export ac_cv_func_setpgrp_void=yes
+export apr_cv_process_shared_works=yes
+export apr_cv_mutex_robust_shared=no
+export apr_cv_tcp_nodelay_with_cork=yes
+export ac_cv_sizeof_struct_iovec=8
+export apr_cv_mutex_recursive=yes
+%endif
 %serverbuild
 
 # We need to re-run ./buildconf because of any applied patch(es)
@@ -106,7 +118,7 @@ EOF
 	--with-devrandom=/dev/urandom \
 	--disable-static
 
-%make
+%make LIBS="-lpthread"
 make dox
 
 %check
