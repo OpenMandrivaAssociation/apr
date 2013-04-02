@@ -1,2 +1,5 @@
+removed_sources:
+  apr-1.4.6.tar.gz: 3f5e3f1f67cb4fe0cc46e8c3740105c35a020308
 sources:
-  "apr-1.4.6.tar.gz": 3f5e3f1f67cb4fe0cc46e8c3740105c35a020308
+  apr-1.4.6.tar.bz2: 1a72fc9d89a378590ef243399396169426d1f6cf
+  apr-1.4.6.tar.bz2.asc: a0206def94f8ad16e708e7e5d344afdb92ff6ea6
