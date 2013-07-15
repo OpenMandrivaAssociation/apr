@@ -7,8 +7,8 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Epoch:		1
-Version:	1.4.6
-Release:	4
+Version:	1.4.8
+Release:	1
 License:	Apache License
 Group:		System/Libraries
 Url:		http://apr.apache.org/
@@ -18,7 +18,6 @@ Patch0:		apr-0.9.3-deplibs.patch
 Patch1:		apr-1.4.6-config.diff
 Patch2:		apr-1.0.0-mutextype_reorder.diff
 Patch4:		apr-1.2.2-locktimeout.patch
-Patch5:		apr-aarch64.patch
 
 BuildRequires:	doxygen
 BuildRequires:	libtool
@@ -57,7 +56,6 @@ provide a free library of C data structures and routines.
 %patch1 -p1 -b .config
 %patch2 -p0 -b .mutextype_reorder
 %patch4 -p0 -b .locktimeout
-%patch5 -p1 -b .aarch64
 
 cat >> config.layout << EOF
 <Layout NUX>
