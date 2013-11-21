@@ -7,14 +7,13 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Epoch:		1
-Version:	1.4.8
+Version:	1.5.0
 Release:	1
 License:	Apache License
 Group:		System/Libraries
 Url:		http://apr.apache.org/
 Source0:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2
 Source1:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2.asc
-Patch0:		apr-0.9.3-deplibs.patch
 Patch1:		apr-1.4.6-config.diff
 Patch2:		apr-1.0.0-mutextype_reorder.diff
 Patch4:		apr-1.2.2-locktimeout.patch
@@ -52,7 +51,6 @@ provide a free library of C data structures and routines.
 
 %prep
 %setup -q
-%patch0 -p0 -b .deplibs
 %patch1 -p1 -b .config
 %patch2 -p0 -b .mutextype_reorder
 %patch4 -p0 -b .locktimeout
