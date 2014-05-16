@@ -2,8 +2,10 @@ removed_sources:
   apr-1.4.6.tar.bz2: 1a72fc9d89a378590ef243399396169426d1f6cf
   apr-1.4.6.tar.gz: 3f5e3f1f67cb4fe0cc46e8c3740105c35a020308
   apr-1.4.8.tar.bz2: 2dce90291b6d4072a6e47d096f5c81ae1ce76f9f
+  apr-1.5.0.tar.bz2: cae122be79070645a7ab36a53148487c84ce8bf0
 sources:
   apr-1.4.6.tar.bz2.asc: a0206def94f8ad16e708e7e5d344afdb92ff6ea6
   apr-1.4.8.tar.bz2.asc: 7ad07847fc171af2747109180c0b3cdacabf1453
-  apr-1.5.0.tar.bz2: cae122be79070645a7ab36a53148487c84ce8bf0
   apr-1.5.0.tar.bz2.asc: 056eddaa32a69eab2f6459fc47a70a1ac5afebab
+  apr-1.5.1.tar.bz2: f94e4e0b678282e0704e573b5b2fe6d48bd1c309
+  apr-1.5.1.tar.bz2.asc: d0508146470d4cbb37770c8098a4be237842132c
