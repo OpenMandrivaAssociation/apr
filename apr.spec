@@ -7,8 +7,8 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Epoch:		1
-Version:	1.5.1
-Release:	6
+Version:	1.5.2
+Release:	1
 License:	Apache License
 Group:		System/Libraries
 Url:		http://apr.apache.org/
@@ -148,10 +148,6 @@ sed -e "/^apr_build/d" \
 # antibork
 perl -pi -e "s|^top_builddir=.*|top_builddir=%{_libdir}/apr-%{api}/build|g" %{buildroot}%{_libdir}/apr-%{api}/build/apr_rules.mk
 
-# Move docs to more convenient location
-rm -rf html
-cp -r docs/dox/html html
-
 # here too
 perl -pi -e "s|-luuid -lcrypt||g" \
     %{buildroot}%{_bindir}/apr-%{api}-config \
@@ -172,7 +168,6 @@ install -m0644 include/arch/unix/*.h %{buildroot}%{_includedir}/apr-%{api}/arch/
 %doc CHANGES README*
 %doc docs/APRDesign.html docs/canonical_filenames.html
 %doc docs/incomplete_types docs/non_apr_programs
-%doc --parents html
 %{_bindir}/apr-%{api}-config
 %{_libdir}/libapr-%{api}.so
 %dir %{_libdir}/apr-%{api}
