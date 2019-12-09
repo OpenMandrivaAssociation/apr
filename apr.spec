@@ -7,7 +7,7 @@
 Summary:	Apache Portable Runtime library
 Name:		apr
 Epoch:		1
-Version:	1.6.5
+Version:	1.7.0
 Release:	1
 License:	Apache License
 Group:		System/Libraries
@@ -15,8 +15,6 @@ Url:		http://apr.apache.org/
 Source0:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2
 Source1:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2.asc
 Patch1:		apr-1.4.6-config.diff
-Patch2:		apr-1.0.0-mutextype_reorder.diff
-Patch4:		apr-1.2.2-locktimeout.patch
 
 BuildRequires:	doxygen
 BuildRequires:	libtool
@@ -50,10 +48,7 @@ using the APR library. The mission of the Apache Portable Runtime (APR) is to
 provide a free library of C data structures and routines.
 
 %prep
-%setup -q
-%patch1 -p1 -b .config
-%patch2 -p0 -b .mutextype_reorder
-%patch4 -p0 -b .locktimeout
+%autosetup -p1
 
 cat >> config.layout << EOF
 <Layout NUX>
