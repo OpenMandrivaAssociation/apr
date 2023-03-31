@@ -8,7 +8,7 @@ Summary:	Apache Portable Runtime library
 Name:		apr
 Epoch:		1
 Version:	1.7.0
-Release:	2
+Release:	3
 License:	Apache License
 Group:		System/Libraries
 Url:		http://apr.apache.org/
