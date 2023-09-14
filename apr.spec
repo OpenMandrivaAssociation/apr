@@ -1,14 +1,14 @@
 %define api	1
 %define major	0
-%define libname %mklibname apr %{api} %{major}
+%define oldlibname %mklibname apr 1 0
+%define libname %mklibname apr
 %define devname %mklibname -d apr
-%bcond_with	crosscompile
 
 Summary:	Apache Portable Runtime library
 Name:		apr
 Epoch:		1
-Version:	1.7.0
-Release:	3
+Version:	1.7.4
+Release:	1
 License:	Apache License
 Group:		System/Libraries
 Url:		http://apr.apache.org/
@@ -30,6 +30,7 @@ many operating systems as possible, including Unices, MS Win32, BeOS and OS/2.
 Summary:	Apache Portable Runtime library
 Group: 		System/Libraries
 Obsoletes:	%{_lib}apr1
+%rename %{oldlibname}
 
 %description -n	%{libname}
 The mission of the Apache Portable Runtime (APR) is to provide a free library
@@ -71,7 +72,7 @@ cat >> config.layout << EOF
 EOF
 
 %build
-%if %{with crosscompile}
+%if %{cross_compiling}
 export ac_cv_file__dev_zero=yes
 export ac_cv_func_setpgrp_void=yes
 export apr_cv_process_shared_works=yes
@@ -105,10 +106,12 @@ export apr_cv_mutex_recursive=yes
 %make LIBS="-lpthread"
 make dox
 
+%if ! %{cross_compiling}
 %check
 # Must allow failure because testsockets will
 # fail in abf (port not available in container)
 make check || :
+%endif
 
 %install
 %makeinstall_std
@@ -170,4 +173,3 @@ install -m0644 include/arch/unix/*.h %{buildroot}%{_includedir}/apr-%{api}/arch/
 %{_includedir}/apr-%{api}/*.h
 %{_includedir}/apr-%{api}/arch/*.h
 %{_includedir}/apr-%{api}/arch/unix/*.h
-
