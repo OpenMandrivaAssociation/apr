@@ -11,7 +11,7 @@ Version:	1.7.5
 Release:	1
 License:	Apache License
 Group:		System/Libraries
-Url:		http://apr.apache.org/
+Url:		https://apr.apache.org/
 Source0:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2
 Source1:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2.asc
 Patch1:		apr-1.4.6-config.diff
