@@ -16,6 +16,11 @@ Source0:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2
 Source1:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2.asc
 Patch1:		apr-1.4.6-config.diff
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	doxygen
 BuildRequires:	libtool
 BuildRequires:	python
