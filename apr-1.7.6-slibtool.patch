@@ -1,0 +1,47 @@
+diff -up apr-1.7.6/build/buildcheck.sh.2~ apr-1.7.6/build/buildcheck.sh
+--- apr-1.7.6/build/buildcheck.sh.2~	2019-12-27 22:56:08.000000000 +0100
++++ apr-1.7.6/build/buildcheck.sh	2026-02-14 00:59:42.060275980 +0100
+@@ -41,8 +41,11 @@ fi
+ 
+ # Require libtool 1.4 or newer
+ if test -z "$libtool"; then
+-  libtool=`build/PrintPath glibtool1 glibtool libtool libtool15 libtool14`
++  libtool=`build/PrintPath slibtool glibtool1 glibtool libtool libtool15 libtool14`
+ fi
++if $libtool --version 2>/dev/null |grep -q slibtool; then
++  echo "buildconf: slibtool version $($libtool --version) (ok)"
++else
+ lt_pversion=`$libtool --version 2>/dev/null|sed -e 's/([^)]*)//g;s/^[^0-9]*//;s/[- ].*//g;q'`
+ if test -z "$lt_pversion"; then
+   echo "buildconf: libtool not found."
+@@ -67,6 +70,7 @@ else
+     res=1
+   fi
+ fi
++fi
+ 
+ exit $res
+ 
+diff -up apr-1.7.6/buildconf.2~ apr-1.7.6/buildconf
+--- apr-1.7.6/buildconf.2~	2018-06-27 13:49:33.000000000 +0200
++++ apr-1.7.6/buildconf	2026-02-14 01:03:06.756437992 +0100
+@@ -28,7 +28,7 @@ fi
+ #
+ build/buildcheck.sh $verbose || exit 1
+ 
+-libtoolize=`build/PrintPath glibtoolize1 glibtoolize libtoolize15 libtoolize14 libtoolize`
++libtoolize=`build/PrintPath slibtoolize glibtoolize1 glibtoolize libtoolize15 libtoolize14 libtoolize`
+ if [ "x$libtoolize" = "x" ]; then
+     echo "libtoolize not found in path"
+     exit 1
+@@ -98,6 +98,10 @@ rm -f build/libtool.m4.$$
+ 
+ # Clean up any leftovers
+ rm -f aclocal.m4 libtool.m4
++cp -f /usr/share/aclocal/libtool.m4 /usr/share/slibtool/ltmain.sh build/
++
++slibtoolize --force ; ln -sf /usr/bin/rclibtool libtool
++aclocal
+ 
+ #
+ # Generate the autoconf header and ./configure

@@ -8,23 +8,30 @@ Summary:	Apache Portable Runtime library
 Name:		apr
 Epoch:		1
 Version:	1.7.6
-Release:	1
+Release:	2
 License:	Apache License
 Group:		System/Libraries
 Url:		https://apr.apache.org/
 Source0:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2
 Source1:	http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2.asc
-Patch1:		apr-1.4.6-config.diff
 
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	doxygen
-BuildRequires:	libtool
 BuildRequires:	python
 BuildRequires:	pkgconfig(uuid)
+
+%patchlist
+apr-1.4.6-config.diff
+apr-1.7.6-slibtool.patch
+https://www.mirrorservice.org/sites/portage.gentoo.org/dev-libs/apr/files/apr-1.6.3-skip-known-failing-tests.patch
+https://www.mirrorservice.org/sites/portage.gentoo.org/dev-libs/apr/files/apr-1.7.2-autoconf-2.72.patch
+#https://www.mirrorservice.org/sites/portage.gentoo.org/dev-libs/apr/files/apr-1.7.2-fix-pkgconfig-libs.patch
+https://www.mirrorservice.org/sites/portage.gentoo.org/dev-libs/apr/files/apr-1.7.2-libtool.patch
+https://www.mirrorservice.org/sites/portage.gentoo.org/dev-libs/apr/files/apr-1.7.2-respect-flags.patch
+#https://www.mirrorservice.org/sites/portage.gentoo.org/dev-libs/apr/files/apr-1.7.6-autoconf.patch
 
 %description
 The mission of the Apache Portable Runtime (APR) is to provide a free library
@@ -47,6 +54,7 @@ Summary:	APR library development kit
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
+Requires:	slibtool
 
 %description -n	%{devname}
 This package provides the support files which can be used to build applications
@@ -55,6 +63,7 @@ provide a free library of C data structures and routines.
 
 %prep
 %autosetup -p1
+slibtoolize --force
 
 cat >> config.layout << EOF
 <Layout NUX>
@@ -108,7 +117,7 @@ export apr_cv_mutex_recursive=yes
 	--with-devrandom=/dev/urandom \
 	--disable-static
 
-%make LIBS="-lpthread"
+%make LIBTOOL=slibtool-shared
 make dox
 
 %if ! %{cross_compiling}
@@ -119,7 +128,7 @@ make check || :
 %endif
 
 %install
-%makeinstall_std
+%make_install LIBTOOL=slibtool-shared
 
 # These are referenced by apr_rules.mk
 for f in make_exports.awk make_var_export.awk; do
@@ -134,13 +143,19 @@ for f in apr_common.m4 apr_hints.m4 apr_network.m4 apr_threads.m4 find_apr.m4; d
 done
 install -m0755 build/gen-build.py %{buildroot}%{_libdir}/apr-%{api}/build/
 
-# enforce system libtool
-ln -snf %{_bindir}/libtool %{buildroot}%{_libdir}/apr-%{api}/build/libtool
+# enforce system slibtool
+# Can't just be a symlink because 
+cat >%{buildroot}%{_libdir}/apr-%{api}/build/libtool <<'EOF'
+#!/bin/sh
+exec %{_bindir}/slibtool-shared "$@"
+EOF
+chmod +x %{buildroot}%{_libdir}/apr-%{api}/build/libtool
 
 # Sanitize apr_rules.mk
 sed -e "/^apr_build/d" \
     -e 's|$(apr_builders)|%{_libdir}/apr-%{api}/build|g' \
     -e 's|$(apr_builddir)|%{_libdir}/apr-%{api}/build|g' \
+    -e 's|^LIBTOOL=.*|LIBTOOL=%{_bindir}/slibtool-shared|' \
     < build/apr_rules.mk > %{buildroot}%{_libdir}/apr-%{api}/build/apr_rules.mk
 
 # antibork
