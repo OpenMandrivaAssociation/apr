@@ -22,6 +22,7 @@ BuildRequires:	make
 BuildRequires:	doxygen
 BuildRequires:	python
 BuildRequires:	pkgconfig(uuid)
+BuildRequires:	libtool-autoconf-macros
 
 %patchlist
 apr-1.4.6-config.diff
